@@ -1,10 +1,405 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>My Site</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JunXChlore — Dreamer</title>
+<meta name="description" content="JunXChlore's personal homepage — Dreamer">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --neon-cyan:#00f0ff;
+  --neon-pink:#ff2d95;
+  --neon-purple:#b026ff;
+  --neon-yellow:#f5f740;
+  --bg-dark:#0a0a0f;
+  --bg-card:rgba(10,10,20,0.7);
+  --text-main:#e0e0e8;
+  --text-dim:#6a6a7a;
+  --grid-color:rgba(0,240,255,0.04);
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg-dark);
+  color:var(--text-main);
+  font-family:'Rajdhani',sans-serif;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* === GRID BACKGROUND === */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;
+  background-image:
+    linear-gradient(var(--grid-color) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-color) 1px,transparent 1px);
+  background-size:60px 60px;
+  animation:gridScroll 20s linear infinite;
+}
+@keyframes gridScroll{to{background-position:60px 60px}}
+
+/* === AMBIENT GLOW === */
+.ambient{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+}
+.ambient .orb{
+  position:absolute;border-radius:50%;filter:blur(120px);opacity:.25;
+  animation:orbFloat 8s ease-in-out infinite alternate;
+}
+.ambient .orb:nth-child(1){width:500px;height:500px;background:var(--neon-cyan);top:-10%;left:-5%;animation-duration:10s}
+.ambient .orb:nth-child(2){width:400px;height:400px;background:var(--neon-pink);bottom:-10%;right:-5%;animation-delay:2s;animation-duration:12s}
+.ambient .orb:nth-child(3){width:300px;height:300px;background:var(--neon-purple);top:40%;left:50%;animation-delay:4s;animation-duration:9s}
+@keyframes orbFloat{
+  0%{transform:translate(0,0) scale(1)}
+  100%{transform:translate(40px,-30px) scale(1.15)}
+}
+
+/* === SCANLINE === */
+.scanline{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent,transparent 2px,
+    rgba(0,240,255,0.015) 2px,rgba(0,240,255,0.015) 4px
+  );
+}
+
+/* === MAIN CONTAINER === */
+.container{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100vh;padding:2rem;
+}
+
+/* === AVATAR === */
+.avatar-wrapper{
+  position:relative;margin-bottom:2rem;
+  animation:fadeInUp .8s ease-out both;
+}
+.avatar-ring{
+  width:160px;height:160px;border-radius:50%;padding:4px;
+  background:conic-gradient(var(--neon-cyan),var(--neon-purple),var(--neon-pink),var(--neon-cyan));
+  animation:ringRotate 4s linear infinite;
+}
+@keyframes ringRotate{to{filter:hue-rotate(360deg)}}
+.avatar-inner{
+  width:100%;height:100%;border-radius:50%;
+  background:var(--bg-dark);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Orbitron',monospace;font-size:2.8rem;font-weight:900;
+  color:var(--neon-cyan);
+  text-shadow:0 0 20px var(--neon-cyan),0 0 40px rgba(0,240,255,0.3);
+}
+.avatar-glow{
+  position:absolute;inset:-8px;border-radius:50%;
+  background:conic-gradient(var(--neon-cyan),var(--neon-purple),var(--neon-pink),var(--neon-cyan));
+  filter:blur(20px);opacity:.35;z-index:-1;
+  animation:ringRotate 4s linear infinite;
+}
+
+/* === NAME / GLITCH === */
+.name-section{
+  text-align:center;margin-bottom:2.5rem;
+  animation:fadeInUp .8s ease-out .2s both;
+}
+.name{
+  font-family:'Orbitron',monospace;
+  font-size:clamp(2.2rem,6vw,4rem);
+  font-weight:900;
+  color:#fff;
+  text-transform:uppercase;
+  letter-spacing:.15em;
+  position:relative;
+  display:inline-block;
+}
+.name::before,.name::after{
+  content:attr(data-text);
+  position:absolute;top:0;left:0;right:0;
+  overflow:hidden;
+}
+.name::before{
+  color:var(--neon-cyan);
+  text-shadow:0 0 10px var(--neon-cyan);
+  animation:glitch1 3s infinite linear alternate;
+  clip-path:inset(0 0 65% 0);
+}
+.name::after{
+  color:var(--neon-pink);
+  text-shadow:0 0 10px var(--neon-pink);
+  animation:glitch2 2.5s infinite linear alternate;
+  clip-path:inset(65% 0 0 0);
+}
+@keyframes glitch1{
+  0%,90%{transform:translate(0)}
+  92%{transform:translate(-3px,1px)}
+  94%{transform:translate(3px,-1px)}
+  96%{transform:translate(-2px)}
+  98%{transform:translate(2px,1px)}
+  100%{transform:translate(0)}
+}
+@keyframes glitch2{
+  0%,88%{transform:translate(0)}
+  90%{transform:translate(3px,-1px)}
+  93%{transform:translate(-3px,1px)}
+  95%{transform:translate(2px)}
+  97%{transform:translate(-2px,-1px)}
+  100%{transform:translate(0)}
+}
+
+/* === TAGLINE === */
+.tagline{
+  font-family:'Share Tech Mono',monospace;
+  font-size:clamp(1rem,2.5vw,1.3rem);
+  color:var(--neon-cyan);
+  letter-spacing:.5em;
+  text-transform:uppercase;
+  margin-top:.8rem;
+  text-shadow:0 0 15px var(--neon-cyan),0 0 30px rgba(0,240,255,0.2);
+  position:relative;
+}
+.tagline .cursor{
+  display:inline-block;width:2px;height:1.1em;
+  background:var(--neon-cyan);vertical-align:text-bottom;
+  animation:blink 1s step-end infinite;
+  box-shadow:0 0 8px var(--neon-cyan);
+}
+@keyframes blink{50%{opacity:0}}
+
+/* === DIVIDER === */
+.divider{
+  width:clamp(200px,50vw,400px);height:1px;
+  background:linear-gradient(90deg,transparent,var(--neon-cyan),var(--neon-pink),transparent);
+  margin:0 auto 2.5rem;
+  animation:fadeInUp .8s ease-out .4s both;
+  box-shadow:0 0 12px rgba(0,240,255,0.3);
+}
+
+/* === SOCIAL LINKS === */
+.social-grid{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;
+  margin-bottom:3rem;
+  animation:fadeInUp .8s ease-out .6s both;
+}
+.social-link{
+  display:flex;align-items:center;gap:.6rem;
+  padding:.7rem 1.4rem;
+  border:1px solid rgba(0,240,255,0.2);
+  border-radius:4px;
+  background:var(--bg-card);
+  backdrop-filter:blur(10px);
+  text-decoration:none;
+  color:var(--text-main);
+  font-family:'Share Tech Mono',monospace;
+  font-size:.85rem;
+  letter-spacing:.08em;
+  transition:all .3s ease;
+  position:relative;
+  overflow:hidden;
+}
+.social-link::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,240,255,0.08),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.social-link:hover::before{opacity:1}
+.social-link:hover{
+  border-color:var(--neon-cyan);
+  box-shadow:0 0 20px rgba(0,240,255,0.15),inset 0 0 20px rgba(0,240,255,0.05);
+  transform:translateY(-2px);
+  color:#fff;
+}
+.social-link svg{
+  width:18px;height:18px;flex-shrink:0;
+  fill:currentColor;
+  filter:drop-shadow(0 0 4px var(--neon-cyan));
+  transition:filter .3s;
+}
+.social-link:hover svg{
+  filter:drop-shadow(0 0 8px var(--neon-cyan));
+}
+
+/* corner accents on cards */
+.social-link::after{
+  content:'';position:absolute;top:0;right:0;
+  width:8px;height:8px;
+  border-top:1px solid var(--neon-cyan);
+  border-right:1px solid var(--neon-cyan);
+  opacity:.5;transition:opacity .3s;
+}
+.social-link:hover::after{opacity:1}
+
+/* === STATUS BAR === */
+.status-bar{
+  font-family:'Share Tech Mono',monospace;
+  font-size:.7rem;
+  color:var(--text-dim);
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  text-align:center;
+  animation:fadeInUp .8s ease-out .8s both;
+}
+.status-bar .online-dot{
+  display:inline-block;width:6px;height:6px;
+  background:var(--neon-cyan);border-radius:50%;
+  margin-right:6px;
+  box-shadow:0 0 6px var(--neon-cyan);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.5;transform:scale(.8)}
+}
+
+/* === MOUSE FOLLOWER === */
+.cursor-glow{
+  position:fixed;width:200px;height:200px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(0,240,255,0.08),transparent 70%);
+  pointer-events:none;z-index:1;
+  transform:translate(-50%,-50%);
+  transition:left .15s ease-out,top .15s ease-out;
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeInUp{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* === RESPONSIVE === */
+@media(max-width:600px){
+  .avatar-ring{width:120px;height:120px}
+  .avatar-inner{font-size:2rem}
+  .social-grid{gap:.6rem}
+  .social-link{padding:.6rem 1rem;font-size:.75rem}
+  .cursor-glow{display:none}
+}
+
+/* === CORNER DECORATIONS === */
+.corner{
+  position:fixed;z-index:3;pointer-events:none;
+  width:60px;height:60px;
+}
+.corner--tl{top:16px;left:16px;border-top:1px solid var(--neon-cyan);border-left:1px solid var(--neon-cyan)}
+.corner--tr{top:16px;right:16px;border-top:1px solid var(--neon-cyan);border-right:1px solid var(--neon-cyan)}
+.corner--bl{bottom:16px;left:16px;border-bottom:1px solid var(--neon-pink);border-left:1px solid var(--neon-pink)}
+.corner--br{bottom:16px;right:16px;border-bottom:1px solid var(--neon-pink);border-right:1px solid var(--neon-pink)}
+.corner{opacity:.3}
+</style>
 </head>
 <body>
-    <h1>Hello! My website is live!</h1>
-    <p>If you can see this, it means everything is working.</p>
+
+<!-- Ambient Glow -->
+<div class="ambient">
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+</div>
+
+<!-- Scanlines -->
+<div class="scanline"></div>
+
+<!-- Corner Decorations -->
+<div class="corner corner--tl"></div>
+<div class="corner corner--tr"></div>
+<div class="corner corner--bl"></div>
+<div class="corner corner--br"></div>
+
+<!-- Mouse Glow -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- Main Content -->
+<div class="container">
+
+  <!-- Avatar -->
+  <div class="avatar-wrapper">
+    <div class="avatar-glow"></div>
+    <div class="avatar-ring">
+      <div class="avatar-inner">J</div>
+    </div>
+  </div>
+
+  <!-- Name + Tagline -->
+  <div class="name-section">
+    <h1 class="name" data-text="JunXChlore">JunXChlore</h1>
+    <p class="tagline">Dreamer<span class="cursor"></span></p>
+  </div>
+
+  <!-- Divider -->
+  <div class="divider"></div>
+
+  <!-- Social Links -->
+  <div class="social-grid">
+
+    <a href="https://github.com/JunXChlore" target="_blank" rel="noopener" class="social-link">
+      <svg viewBox="0 0 24 24"><path d="M12 .3a12 12 0 00-3.8 23.38c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61a3.18 3.18 0 00-1.33-1.76c-1.09-.74.08-.73.08-.73a2.52 2.52 0 011.84 1.24 2.56 2.56 0 003.5 1 2.56 2.56 0 01.76-1.61c-2.67-.3-5.47-1.33-5.47-5.93a4.64 4.64 0 011.24-3.22 4.3 4.3 0 01.12-3.18s1-.33 3.3 1.23a11.38 11.38 0 016 0c2.28-1.56 3.29-1.23 3.29-1.23a4.3 4.3 0 01.12 3.18 4.64 4.64 0 011.23 3.22c0 4.61-2.81 5.63-5.48 5.92a2.87 2.87 0 01.82 2.23v3.29c0 .32.21.7.82.58A12 12 0 0012 .3"/></svg>
+      GitHub
+    </a>
+
+    <a href="https://x.com/JunX_Chlore" target="_blank" rel="noopener" class="social-link">
+      <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      X / Twitter
+    </a>
+
+    <a href="https://t.me/chlore0510" target="_blank" rel="noopener" class="social-link">
+      <svg viewBox="0 0 24 24"><path d="M11.99 0C5.37 0 0 5.37 0 12s5.37 12 11.99 12S24 18.63 24 12 18.61 0 11.99 0zm5.9 8.1l-1.67 7.88c-.13.56-.46.7-.93.43l-2.56-1.89-1.24 1.19c-.14.14-.25.25-.51.25l.18-2.61 4.75-4.29c.21-.18-.04-.28-.32-.1l-5.87 3.7-2.53-.79c-.55-.17-.56-.55.11-.82l9.89-3.81c.46-.17.86.11.7.82z"/></svg>
+      Telegram
+    </a>
+
+    <a href="https://space.bilibili.com/3546639933376873" target="_blank" rel="noopener" class="social-link">
+      <svg viewBox="0 0 24 24"><path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 01-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 01.16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z"/></svg>
+      Bilibili
+    </a>
+
+  </div>
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <span class="online-dot"></span>
+    <span id="statusText">SYSTEM ONLINE — </span>
+    <span id="clock"></span>
+  </div>
+
+</div>
+
+<script>
+/* Mouse follower */
+const glow = document.getElementById('cursorGlow');
+document.addEventListener('mousemove', e => {
+  glow.style.left = e.clientX + 'px';
+  glow.style.top = e.clientY + 'px';
+});
+
+/* Live clock */
+const clockEl = document.getElementById('clock');
+function updateClock() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2, '0');
+  const m = String(now.getMinutes()).padStart(2, '0');
+  const s = String(now.getSeconds()).padStart(2, '0');
+  clockEl.textContent = h + ':' + m + ':' + s;
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+/* Typing effect for tagline */
+const tagline = document.querySelector('.tagline');
+const text = 'Dreamer';
+const cursor = tagline.querySelector('.cursor');
+tagline.textContent = '';
+tagline.appendChild(cursor);
+let i = 0;
+function typeChar() {
+  if (i < text.length) {
+    tagline.insertBefore(document.createTextNode(text[i]), cursor);
+    i++;
+    setTimeout(typeChar, 150);
+  }
+}
+setTimeout(typeChar, 1200);
+</script>
 </body>
 </html>
