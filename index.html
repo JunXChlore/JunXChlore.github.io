@@ -3,454 +3,308 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JunXChlore</title>
+<title>JunXChlore - Personal Space</title>
 <meta name="description" content="JunXChlore — Dreamer">
 <link rel="icon" type="image/jpeg" href="./avatar.jpg">
-<link rel="apple-touch-icon" href="./avatar.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
-:root{
-  --bg:#0b0b0e;
-  --bg-card:#111115;
-  --bg-hover:#18181d;
-  --text:#e8e8ed;
-  --text-dim:#555560;
-  --text-mid:#8888a0;
-  --accent:#64ffda;
-  --accent-rgb:100,255,218;
-  --accent-dim:rgba(100,255,218,0.08);
-  --accent-border:rgba(100,255,218,0.15);
-  --border:#1a1a22;
-  --mono:'JetBrains Mono',monospace;
-  --sans:'IBM Plex Sans','Inter',sans-serif;
-  --mx:50%;
-  --my:50%;
+:root {
+  --bg: #0b0b0e;
+  --bg-card: #111115;
+  --bg-hover: #18181d;
+  --text: #e8e8ed;
+  --text-dim: #6b6b7b;
+  --text-mid: #9a9ab0;
+  --accent: #c084fc; /* 紫色主色调 */
+  --accent-rgb: 192, 132, 252;
+  --accent-dim: rgba(192, 132, 252, 0.08);
+  --accent-border: rgba(192, 132, 252, 0.2);
+  --border: #1f1f28;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'IBM Plex Sans', 'Inter', sans-serif;
+  --mx: 50%;
+  --my: 50%;
 }
 
-/* === THEMES === */
-:root[data-theme="neon"]{--accent:#ff2e88;--accent-rgb:255,46,136;--accent-dim:rgba(255,46,136,0.08);--accent-border:rgba(255,46,136,0.18)}
-:root[data-theme="amber"]{--accent:#ffb000;--accent-rgb:255,176,0;--accent-dim:rgba(255,176,0,0.08);--accent-border:rgba(255,176,0,0.18)}
-:root[data-theme="plasma"]{--accent:#c084fc;--accent-rgb:192,132,252;--accent-dim:rgba(192,132,252,0.08);--accent-border:rgba(192,132,252,0.18)}
+html { scroll-behavior: smooth; }
 
-html{scroll-behavior:smooth}
-
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--sans);
-  line-height:1.7;
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-::selection{background:rgba(var(--accent-rgb),0.25);color:#fff}
+::selection { background: rgba(var(--accent-rgb), 0.25); color: #fff; }
 
-/* === MOUSE SPOTLIGHT (NEW) === */
-.spotlight{
-  position:fixed;inset:0;z-index:1;pointer-events:none;
-  background:radial-gradient(550px circle at var(--mx) var(--my),rgba(var(--accent-rgb),0.06),transparent 55%);
-  transition:background .1s linear;
-}
-
-/* === AURORA BLOB (NEW) === */
-.aurora{
-  position:fixed;top:-220px;left:50%;
-  width:700px;height:700px;
-  background:radial-gradient(circle,var(--accent),transparent 65%);
-  filter:blur(140px);
-  opacity:.09;
-  z-index:0;
-  pointer-events:none;
-  animation:auroraDrift 14s ease-in-out infinite;
-}
-@keyframes auroraDrift{
-  0%,100%{transform:translate(-50%,0) scale(1)}
-  33%{transform:translate(-30%,40px) scale(1.15)}
-  66%{transform:translate(-65%,80px) scale(.95)}
+/* === 动态背景 & 鼠标发光 === */
+.spotlight {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(600px circle at var(--mx) var(--my), rgba(var(--accent-rgb), 0.05), transparent 50%);
+  transition: background 0.1s linear;
 }
 
-/* === NOISE OVERLAY === */
-body::before{
-  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
-  opacity:.025;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+.aurora {
+  position: fixed; top: -200px; left: 50%;
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, var(--accent), transparent 60%);
+  filter: blur(150px);
+  opacity: 0.08;
+  z-index: 0;
+  pointer-events: none;
+  animation: auroraDrift 15s ease-in-out infinite;
+}
+@keyframes auroraDrift {
+  0%,100% { transform: translate(-50%, 0) scale(1); }
+  33% { transform: translate(-30%, 30px) scale(1.1); }
+  66% { transform: translate(-70%, 60px) scale(0.9); }
 }
 
-/* === GRID DOT BACKGROUND === */
-body::after{
-  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-image:radial-gradient(circle,rgba(var(--accent-rgb),0.04) 1px,transparent 1px);
-  background-size:32px 32px;
+body::after {
+  content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: radial-gradient(circle, rgba(var(--accent-rgb), 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
-/* === LAYOUT === */
-.page{
-  position:relative;z-index:2;
-  max-width:680px;
-  margin:0 auto;
-  padding:0 2rem;
+/* === 顶部导航栏 === */
+.nav-bar {
+  position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+  background: rgba(11, 11, 14, 0.7);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: center;
+}
+.nav-container {
+  display: flex; justify-content: space-between; align-items: center;
+  width: 100%; max-width: 680px; padding: 0 1rem;
+}
+.nav-btn {
+  background: none; border: none;
+  color: var(--text-dim);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  padding: 1.2rem 1rem;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s ease;
+  flex: 1; text-align: center;
+}
+.nav-btn::after {
+  content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 0; height: 2px; background: var(--accent);
+  transition: width 0.3s ease;
+}
+.nav-btn:hover { color: var(--text); }
+.nav-btn.active { color: var(--accent); }
+.nav-btn.active::after { width: 40px; }
+
+/* === 页面布局 === */
+.container {
+  position: relative; z-index: 2;
+  max-width: 680px; margin: 0 auto;
+  padding: 6rem 2rem 4rem; /* 留出导航栏空间 */
+  min-height: 100vh;
 }
 
-/* === HEADER === */
-.header{
-  padding:6rem 0 4rem;
-  opacity:0;animation:fadeIn .8s ease .2s forwards;
+/* 视图切换动画逻辑 */
+.view-section {
+  display: none; opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
-.header__top{
-  display:flex;align-items:center;gap:1.6rem;
-  margin-bottom:1.5rem;
+.view-section.active {
+  display: block;
 }
-.avatar-wrap{position:relative;flex-shrink:0}
-.avatar{
-  width:96px;height:96px;
-  border-radius:50%;
-  border:2px solid var(--accent-border);
-  box-shadow:
-    0 0 0 6px rgba(var(--accent-rgb),0.05),
-    0 8px 28px rgba(0,0,0,0.5);
-  display:block;
-  object-fit:cover;
-  transition:transform .35s cubic-bezier(.2,.8,.2,1),
-             box-shadow .35s ease,
-             border-color .35s ease;
-  cursor:pointer;
-}
-.avatar:hover{
-  transform:scale(1.06) rotate(-3deg);
-  border-color:var(--accent);
-  box-shadow:
-    0 0 0 10px rgba(var(--accent-rgb),0.08),
-    0 14px 36px rgba(var(--accent-rgb),0.18);
-}
-.avatar-status{
-  position:absolute;
-  bottom:5px;right:5px;
-  width:14px;height:14px;
-  border-radius:50%;
-  background:var(--accent);
-  border:3px solid var(--bg);
-  animation:pulse 2.5s ease-in-out infinite;
-  box-shadow:0 0 8px rgba(var(--accent-rgb),0.6);
-}
-.header__intro{flex:1;min-width:0}
-.header__intro .header__greeting{margin-bottom:1rem}
-.header__greeting{
-  font-family:var(--mono);
-  font-size:.8rem;
-  color:var(--accent);
-  letter-spacing:.08em;
-  margin-bottom:1.5rem;
-  display:flex;align-items:center;gap:.5rem;
-}
-.header__greeting::before{
-  content:'';width:2rem;height:1px;background:var(--accent);
-}
-.header__name{
-  font-size:clamp(2rem,5vw,3rem);
-  font-weight:600;
-  color:#fff;
-  letter-spacing:-.02em;
-  line-height:1.15;
-  margin-bottom:.75rem;
-  display:inline-block;
-  cursor:default;
-  position:relative;
-  transition:text-shadow .2s;
-}
-.header__name:hover{animation:glitch .42s linear 1}
-@keyframes glitch{
-  0%,100%{text-shadow:none;transform:translate(0)}
-  20%{text-shadow:1.5px 0 var(--accent),-1.5px 0 #ff2e88;transform:translate(-1px,1px)}
-  40%{text-shadow:-1.5px 0 var(--accent),1.5px 0 #ff2e88;transform:translate(1px,-1px)}
-  60%{text-shadow:1.5px 1.5px var(--accent);transform:translate(-1px,-1px)}
-  80%{text-shadow:-1.5px -1.5px #ff2e88;transform:translate(1px,1px)}
-}
-.header__tagline{
-  font-family:var(--mono);
-  font-size:1rem;
-  color:var(--text-dim);
-  font-weight:300;
-}
-.header__tagline .cursor{
-  display:inline-block;
-  width:8px;height:1.1em;
-  background:var(--accent);
-  vertical-align:text-bottom;
-  margin-left:2px;
-  animation:blink 1.1s step-end infinite;
-}
-@keyframes blink{50%{opacity:0}}
-
-/* === BIO SECTION === */
-.bio{
-  padding:2rem 0 3rem;
-  border-top:1px solid var(--border);
-  opacity:0;animation:fadeIn .8s ease .4s forwards;
-}
-.bio p{
-  color:var(--text-mid);
-  font-size:.95rem;
-  max-width:520px;
-  line-height:1.8;
-}
-.bio p .highlight{color:var(--accent)}
-
-/* === TERMINAL WIDGET === */
-.terminal{
-  margin:0 0 3rem;
-  border:1px solid var(--border);
-  border-radius:8px;
-  overflow:hidden;
-  opacity:0;animation:fadeIn .8s ease .6s forwards;
-  transition:border-color .25s;
-}
-.terminal:focus-within{border-color:var(--accent-border)}
-.terminal__bar{
-  display:flex;align-items:center;gap:6px;
-  padding:10px 14px;
-  background:var(--bg-card);
-  border-bottom:1px solid var(--border);
-}
-.terminal__dot{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--text-dim)}
-.terminal__dot:nth-child(1){border-color:#ff5f57}
-.terminal__dot:nth-child(2){border-color:#febc2e}
-.terminal__dot:nth-child(3){border-color:#28c840}
-.terminal__title{
-  flex:1;text-align:center;
-  font-family:var(--mono);font-size:.7rem;color:var(--text-dim);
-  margin-right:36px;
-}
-.terminal__body{
-  padding:1.2rem 1.4rem;
-  font-family:var(--mono);
-  font-size:.8rem;
-  line-height:2;
-  background:var(--bg);
-  min-height:140px;
-  cursor:text;
-}
-.terminal__line{display:flex;gap:.5rem;color:var(--text-dim);flex-wrap:wrap}
-.terminal__line .prompt{color:var(--accent);white-space:nowrap}
-.terminal__line .cmd{color:var(--text)}
-.terminal__line .flag{color:var(--text-mid)}
-.terminal__line .output{color:var(--text-mid);padding-left:1.5rem;white-space:pre-wrap;word-break:break-word}
-.terminal__line .val{color:var(--accent)}
-.terminal__line .err{color:#ff6b6b}
-.term-input-line{display:flex;gap:.5rem;align-items:center}
-.term-input-line .prompt{color:var(--accent)}
-.term-input-line .typed{color:var(--text);white-space:pre-wrap}
-.term-input-line .caret{
-  display:inline-block;width:7px;height:1.05em;
-  background:var(--accent);
-  animation:blink 1.1s step-end infinite;
-  vertical-align:text-bottom;
-}
-.term-hidden-input{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-
-/* === LINKS SECTION === */
-.section{
-  padding:2.5rem 0;
-  border-top:1px solid var(--border);
-}
-.section__label{
-  font-family:var(--mono);
-  font-size:.7rem;
-  color:var(--text-dim);
-  letter-spacing:.15em;
-  text-transform:uppercase;
-  margin-bottom:1.5rem;
-  display:flex;align-items:center;gap:.6rem;
-}
-.section__label::after{
-  content:'';flex:1;height:1px;background:var(--border);
+.view-section.fade-in {
+  opacity: 1; transform: translateY(0);
 }
 
-/* === LINK CARDS (with 3D tilt) === */
-.links{display:flex;flex-direction:column;gap:2px;perspective:800px}
-.link-item{
-  display:flex;align-items:center;gap:1rem;
-  padding:.85rem 1rem;
-  border-radius:6px;
-  text-decoration:none;
-  color:var(--text);
-  transition:background .2s ease,transform .12s ease;
-  position:relative;
-  transform-style:preserve-3d;
-  will-change:transform;
+/* === 模块通用标题 === */
+.section__label {
+  font-family: var(--mono); font-size: 0.75rem; color: var(--text-dim);
+  letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 0.6rem;
 }
-.link-item:hover{background:var(--accent-dim)}
-.link-item:hover .link-item__name{color:#fff}
-.link-item:hover .link-item__arrow{opacity:1;transform:translateX(0);color:var(--accent)}
-.link-item__icon{
-  width:36px;height:36px;
-  border-radius:6px;
-  border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-  transition:border-color .2s,transform .15s;
-  transform:translateZ(20px);
-}
-.link-item:hover .link-item__icon{border-color:var(--accent-border)}
-.link-item__icon svg{width:16px;height:16px;fill:var(--text-mid);transition:fill .2s}
-.link-item:hover .link-item__icon svg{fill:var(--accent)}
-.link-item__info{flex:1;min-width:0;transform:translateZ(10px)}
-.link-item__name{font-size:.9rem;font-weight:500;transition:color .2s}
-.link-item__desc{font-size:.75rem;color:var(--text-dim);font-family:var(--mono)}
-.link-item__arrow{
-  font-size:.85rem;color:var(--text-dim);
-  opacity:0;transform:translateX(-8px);
-  transition:all .2s ease;
-}
+.section__label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-/* === FOOTER === */
-.footer{
-  padding:3rem 0 4rem;
-  border-top:1px solid var(--border);
-  display:flex;justify-content:space-between;align-items:center;
-  font-family:var(--mono);
-  font-size:.7rem;
-  color:var(--text-dim);
+/* =========================================
+   Page 1: Profile (主页)
+========================================= */
+.header { margin-bottom: 3rem; }
+.header__top { display: flex; align-items: center; gap: 1.8rem; margin-bottom: 1.5rem; }
+.avatar-wrap { position: relative; flex-shrink: 0; }
+.avatar {
+  width: 90px; height: 90px; border-radius: 50%;
+  border: 2px solid var(--accent-border);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1), border-color 0.4s ease;
 }
-.footer__status{display:flex;align-items:center;gap:6px}
-.footer__dot{
-  width:6px;height:6px;border-radius:50%;
-  background:var(--accent);
-  animation:pulse 2.5s ease-in-out infinite;
+.avatar:hover { transform: scale(1.05) rotate(-3deg); border-color: var(--accent); }
+.avatar-status {
+  position: absolute; bottom: 4px; right: 4px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--accent); border: 3px solid var(--bg);
+  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.6);
 }
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.header__intro { flex: 1; }
+.header__greeting {
+  font-family: var(--mono); font-size: 0.8rem; color: var(--accent);
+  margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;
+}
+.header__greeting::before { content: ''; width: 1.5rem; height: 1px; background: var(--accent); }
+.header__name { font-size: 2.5rem; font-weight: 600; color: #fff; line-height: 1.2; margin-bottom: 0.5rem; }
+.header__tagline { font-family: var(--mono); font-size: 0.95rem; color: var(--text-dim); }
+.header__tagline .cursor {
+  display: inline-block; width: 8px; height: 1.1em; background: var(--accent);
+  vertical-align: text-bottom; margin-left: 2px; animation: blink 1s step-end infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
 
-/* === SCROLL REVEAL === */
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
+.bio { color: var(--text-mid); font-size: 0.95rem; line-height: 1.8; margin-bottom: 3rem; }
+.bio .highlight { color: var(--accent); font-weight: 500; }
 
-@keyframes fadeIn{to{opacity:1}}
+.links { display: flex; flex-direction: column; gap: 4px; }
+.link-item {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1rem; border-radius: 8px; text-decoration: none; color: var(--text);
+  background: var(--bg-card); border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+.link-item:hover { background: var(--accent-dim); border-color: var(--accent-border); transform: translateX(4px); }
+.link-item__icon {
+  width: 40px; height: 40px; border-radius: 8px; border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center; background: var(--bg);
+  transition: border-color 0.2s;
+}
+.link-item:hover .link-item__icon { border-color: var(--accent); }
+.link-item__icon svg { width: 18px; height: 18px; fill: var(--text-mid); transition: fill 0.2s; }
+.link-item:hover .link-item__icon svg { fill: var(--accent); }
+.link-item__info { flex: 1; }
+.link-item__name { font-size: 0.95rem; font-weight: 500; margin-bottom: 2px; }
+.link-item__desc { font-size: 0.75rem; color: var(--text-dim); font-family: var(--mono); }
+.link-item__arrow { font-size: 1rem; color: var(--accent); opacity: 0; transform: translateX(-10px); transition: all 0.3s; }
+.link-item:hover .link-item__arrow { opacity: 1; transform: translateX(0); }
 
-/* === MATRIX RAIN CANVAS (NEW) === */
-#matrixCanvas{
-  position:fixed;inset:0;z-index:9000;
-  display:none;opacity:0;pointer-events:none;
-  transition:opacity 1s ease;
+/* =========================================
+   Page 2: Gallery (画廊)
+========================================= */
+.gallery-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;
 }
-#matrixCanvas.active{display:block;opacity:1}
-#matrixCanvas.fading{opacity:0}
+.gallery-item {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+  overflow: hidden; transition: transform 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+}
+.gallery-item:hover { transform: translateY(-4px); border-color: var(--accent-border); }
+.gallery-img-wrap { width: 100%; height: 200px; overflow: hidden; position: relative; }
+.gallery-img-wrap img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.gallery-item:hover .gallery-img-wrap img { transform: scale(1.08); }
+.gallery-caption { padding: 1.2rem; }
+.gallery-caption p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.5; }
 
-/* === RESPONSIVE === */
-@media(max-width:600px){
-  .page{padding:0 1.2rem}
-  .header{padding:4rem 0 3rem}
-  .header__top{flex-direction:column;align-items:flex-start;gap:1.25rem}
-  .avatar{width:78px;height:78px}
-  .avatar-status{width:12px;height:12px;bottom:3px;right:3px;border-width:2.5px}
-  .terminal__body{font-size:.72rem;padding:1rem}
-  .aurora{width:400px;height:400px;top:-120px}
+/* =========================================
+   Page 3: Notes (备忘录/文章)
+========================================= */
+.notes-list { display: flex; flex-direction: column; gap: 1rem; }
+.note-card {
+  display: flex; gap: 1.5rem; padding: 1.5rem;
+  background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border);
+  transition: all 0.3s ease; cursor: pointer;
 }
+.note-card:hover { background: var(--bg-hover); border-color: var(--accent-border); }
+.note-date {
+  font-family: var(--mono); font-size: 0.8rem; color: var(--accent);
+  white-space: nowrap; flex-shrink: 0; padding-top: 4px;
+}
+.note-content h3 { font-size: 1.1rem; color: var(--text); margin-bottom: 0.5rem; font-weight: 500; }
+.note-content p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-/* === COMMAND PALETTE === */
-.cmd-palette{
-  position:fixed;inset:0;z-index:10000;
-  display:none;align-items:flex-start;justify-content:center;
-  padding-top:20vh;
-  background:rgba(0,0,0,0.7);
-  backdrop-filter:blur(8px);
+/* =========================================
+   Page 4: Finance (资金/资产)
+========================================= */
+.finance-dashboard { display: grid; gap: 1.5rem; }
+.fin-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; position: relative; overflow: hidden; }
+.fin-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent); opacity: 0.5; }
+.fin-total { text-align: center; padding: 2.5rem 1rem; }
+.fin-total::before { display: none; }
+.fin-label { font-family: var(--mono); font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.5rem; display: block; }
+.fin-amount { font-size: 3rem; font-weight: 600; color: #fff; text-shadow: 0 0 20px rgba(var(--accent-rgb), 0.3); }
+.fin-amount span { font-size: 1.5rem; color: var(--text-mid); }
+.fin-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
+.fin-row:last-child { margin-bottom: 0; }
+.fin-name { font-size: 0.95rem; color: var(--text); display: flex; align-items: center; gap: 8px; }
+.fin-name .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+.fin-value { font-family: var(--mono); color: #fff; }
+/* 进度条 */
+.progress-bar { width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden; margin-top: 8px; }
+.progress-fill { height: 100%; background: var(--accent); border-radius: 3px; box-shadow: 0 0 10px var(--accent); }
+
+/* 响应式 */
+@media (max-width: 600px) {
+  .header__top { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .nav-btn { padding: 1rem 0.5rem; font-size: 0.75rem; }
+  .note-card { flex-direction: column; gap: 0.5rem; }
+  .note-date { padding-top: 0; }
+  .fin-amount { font-size: 2.2rem; }
 }
-.cmd-palette.active{display:flex}
-.cmd-palette__box{
-  width:min(500px,90vw);
-  background:var(--bg-card);
-  border:1px solid var(--border);
-  border-radius:10px;
-  overflow:hidden;
-  animation:slideDown .2s ease;
-}
-@keyframes slideDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
-.cmd-palette__input{
-  width:100%;padding:1rem 1.2rem;
-  background:transparent;border:none;border-bottom:1px solid var(--border);
-  color:var(--text);font-family:var(--mono);font-size:.85rem;
-  outline:none;
-}
-.cmd-palette__input::placeholder{color:var(--text-dim)}
-.cmd-palette__list{padding:.5rem 0;max-height:280px;overflow-y:auto}
-.cmd-palette__item{
-  padding:.6rem 1.2rem;
-  font-family:var(--mono);font-size:.8rem;color:var(--text-mid);
-  cursor:pointer;display:flex;align-items:center;gap:.8rem;
-}
-.cmd-palette__item:hover,.cmd-palette__item.selected{background:var(--accent-dim);color:var(--accent)}
-.cmd-palette__item span.key{
-  font-size:.65rem;padding:2px 6px;
-  border:1px solid var(--border);border-radius:4px;
-  color:var(--text-dim);margin-left:auto;
-}
-.cmd-hint{
-  position:fixed;bottom:1.5rem;right:1.5rem;z-index:100;
-  font-family:var(--mono);font-size:.65rem;color:var(--text-dim);
-  padding:6px 10px;
-  border:1px solid var(--border);border-radius:6px;
-  background:var(--bg-card);
-  opacity:0;animation:fadeIn 1s ease 2s forwards;
-  cursor:pointer;
-}
-.cmd-hint:hover{border-color:var(--accent-border);color:var(--text-mid)}
-@media(max-width:600px){.cmd-hint{display:none}}
 </style>
 </head>
 <body>
 
 <div class="spotlight"></div>
 <div class="aurora"></div>
-<canvas id="matrixCanvas"></canvas>
 
-<div class="page">
-
-  <!-- Header -->
-  <header class="header">
-    <div class="header__top">
-      <div class="avatar-wrap">
-        <img src="./avatar.jpg" alt="JunXChlore" class="avatar" id="avatar">
-        <span class="avatar-status"></span>
-      </div>
-      <div class="header__intro">
-        <div class="header__greeting">Hello,welcome to my personal profile</div>
-        <h1 class="header__name">JunXChlore</h1>
-        <p class="header__tagline">
-          <span id="typed"></span><span class="cursor"></span>
-        </p>
-      </div>
-    </div>
-  </header>
-
-  <!-- Bio -->
-  <section class="bio">
-    <p>
-       A liberalism who prefer personal <span class="highlight">Freedom</span>,protection of rights,rule of law 
-       and limited government intervention,while advocating political and economic ideas of equal opportunities and democratic systems.
-       I come from China Mainland but I DO NOT believe in Socialism and Communism Though.
-       My dream is that the light of democracy and freedom will one day shine upon us.
-    </p>
-  </section>
-
-  <!-- Terminal -->
-  <div class="terminal" id="terminal">
-    <div class="terminal__bar">
-      <div class="terminal__dot"></div>
-      <div class="terminal__dot"></div>
-      <div class="terminal__dot"></div>
-      <span class="terminal__title">junx@cloud:~</span>
-    </div>
-    <div class="terminal__body" id="terminalBody"></div>
-    <input type="text" class="term-hidden-input" id="termHiddenInput" autocomplete="off" autocapitalize="off" spellcheck="false">
+<!-- 顶部导航栏 -->
+<nav class="nav-bar">
+  <div class="nav-container">
+    <button class="nav-btn active" data-target="view-profile">Profile</button>
+    <button class="nav-btn" data-target="view-gallery">Gallery</button>
+    <button class="nav-btn" data-target="view-notes">Notes</button>
+    <button class="nav-btn" data-target="view-finance">Finance</button>
   </div>
+</nav>
 
-  <!-- Links -->
-  <section class="section reveal">
-    <div class="section__label">links</div>
+<div class="container">
+
+  <!-- =====================================
+       页面 1: Profile (主页简介与链接)
+  ====================================== -->
+  <section id="view-profile" class="view-section active fade-in">
+    <header class="header">
+      <div class="header__top">
+        <div class="avatar-wrap">
+          <!-- 替换为你自己的头像图片路径 -->
+          <img src="./avatar.jpg" alt="JunXChlore" class="avatar" id="avatar">
+          <span class="avatar-status"></span>
+        </div>
+        <div class="header__intro">
+          <div class="header__greeting">Hello, welcome to my personal space</div>
+          <h1 class="header__name">JunXChlore</h1>
+          <p class="header__tagline"><span id="typed"></span><span class="cursor"></span></p>
+        </div>
+      </div>
+      <div class="bio">
+        A liberalism who prefer personal <span class="highlight">Freedom</span>, protection of rights, rule of law 
+        and limited government intervention, while advocating political and economic ideas of equal opportunities and democratic systems.
+        I come from China Mainland but I DO NOT believe in Socialism and Communism Though.
+        My dream is that the light of democracy and freedom will one day shine upon us.
+      </div>
+    </header>
+
+    <div class="section__label">Social Links</div>
     <div class="links">
-
+      <!-- GitHub -->
       <a href="https://github.com/JunXChlore" target="_blank" rel="noopener" class="link-item">
         <div class="link-item__icon">
           <svg viewBox="0 0 24 24"><path d="M12 .3a12 12 0 00-3.8 23.38c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61a3.18 3.18 0 00-1.33-1.76c-1.09-.74.08-.73.08-.73a2.52 2.52 0 011.84 1.24 2.56 2.56 0 003.5 1 2.56 2.56 0 01.76-1.61c-2.67-.3-5.47-1.33-5.47-5.93a4.64 4.64 0 011.24-3.22 4.3 4.3 0 01.12-3.18s1-.33 3.3 1.23a11.38 11.38 0 016 0c2.28-1.56 3.29-1.23 3.29-1.23a4.3 4.3 0 01.12 3.18 4.64 4.64 0 011.23 3.22c0 4.61-2.81 5.63-5.48 5.92a2.87 2.87 0 01.82 2.23v3.29c0 .32.21.7.82.58A12 12 0 0012 .3"/></svg>
@@ -462,17 +316,19 @@ body::after{
         <span class="link-item__arrow">&rarr;</span>
       </a>
 
-      <a href="https://x.com/JunX_Chlore" target="_blank" rel="noopener" class="link-item">
+      <!-- Twitter / X -->
+      <a href="https://x.com/JunXChlore" target="_blank" rel="noopener" class="link-item">
         <div class="link-item__icon">
           <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
         </div>
         <div class="link-item__info">
-          <div class="link-item__name">X / Twitter</div>
-          <div class="link-item__desc">@JunX_Chlore</div>
+          <div class="link-item__name">X (Twitter)</div>
+          <div class="link-item__desc">@JunXChlore</div>
         </div>
         <span class="link-item__arrow">&rarr;</span>
       </a>
 
+      <!-- Telegram -->
       <a href="https://t.me/chlore0510" target="_blank" rel="noopener" class="link-item">
         <div class="link-item__icon">
           <svg viewBox="0 0 24 24"><path d="M11.99 0C5.37 0 0 5.37 0 12s5.37 12 11.99 12S24 18.63 24 12 18.61 0 11.99 0zm5.9 8.1l-1.67 7.88c-.13.56-.46.7-.93.43l-2.56-1.89-1.24 1.19c-.14.14-.25.25-.51.25l.18-2.61 4.75-4.29c.21-.18-.04-.28-.32-.1l-5.87 3.7-2.53-.79c-.55-.17-.56-.55.11-.82l9.89-3.81c.46-.17.86.11.7.82z"/></svg>
@@ -484,6 +340,7 @@ body::after{
         <span class="link-item__arrow">&rarr;</span>
       </a>
 
+      <!-- Bilibili -->
       <a href="https://space.bilibili.com/3546639933376873" target="_blank" rel="noopener" class="link-item">
         <div class="link-item__icon">
           <svg viewBox="0 0 24 24"><path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 01-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 01.16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z"/></svg>
@@ -495,42 +352,159 @@ body::after{
         <span class="link-item__arrow">&rarr;</span>
       </a>
 
+      <!-- Douyin -->
+      <a href="https://www.douyin.com/user/self?from_tab_name=main" target="_blank" rel="noopener" class="link-item">
+        <div class="link-item__icon">
+          <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.95v5.9c-.01 2.98-1.73 5.82-4.5 6.84-2.88 1.08-6.32.18-8.22-2.1-2.03-2.43-1.89-6.31.33-8.56 2.05-2.1 5.4-2.58 8.01-1.11V4.83c-1.3-.15-2.61-.17-3.92-.08v4.06c.86-.06 1.72-.03 2.58.11v4.45c-.4-.14-.81-.24-1.23-.29-1.46-.16-2.99.27-3.99 1.34-1.07 1.13-1.19 2.97-.28 4.19 1.15 1.55 3.52 1.71 4.9.36 1.03-1 1.25-2.58 1.25-3.95V.02z"/></svg>
+        </div>
+        <div class="link-item__info">
+          <div class="link-item__name">抖音 (Douyin)</div>
+          <div class="link-item__desc">个人主页</div>
+        </div>
+        <span class="link-item__arrow">&rarr;</span>
+      </a>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="footer reveal">
-    <div class="footer__status">
-      <div class="footer__dot"></div>
-      <span>online</span>
+  <!-- =====================================
+       页面 2: Gallery (相册图库)
+  ====================================== -->
+  <!-- 修改说明：只需复制下方 <div class="gallery-item">...</div> 就可以不断增加图片和配文 -->
+  <section id="view-gallery" class="view-section">
+    <div class="section__label">Moments & Memories</div>
+    <div class="gallery-grid">
+      
+      <!-- 图片模块 1 -->
+      <div class="gallery-item">
+        <div class="gallery-img-wrap">
+          <!-- 修改 src 替换图片 -->
+          <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=600&auto=format&fit=crop" alt="Photo 1">
+        </div>
+        <div class="gallery-caption">
+          <p>Cyberpunk vibes in the city. 城市的霓虹与夜色。</p>
+        </div>
+      </div>
+
+      <!-- 图片模块 2 -->
+      <div class="gallery-item">
+        <div class="gallery-img-wrap">
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=600&auto=format&fit=crop" alt="Photo 2">
+        </div>
+        <div class="gallery-caption">
+          <p>硬件与代码的艺术，Vibecoding。</p>
+        </div>
+      </div>
+
+      <!-- 图片模块 3 -->
+      <div class="gallery-item">
+        <div class="gallery-img-wrap">
+          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop" alt="Photo 3">
+        </div>
+        <div class="gallery-caption">
+          <p>Keep exploring. 保持热爱与探索。</p>
+        </div>
+      </div>
+
     </div>
-    <span id="clock"></span>
-  </footer>
+  </section>
+
+  <!-- =====================================
+       页面 3: Notes (文章/备忘录)
+  ====================================== -->
+  <!-- 修改说明：这是致敬 iOS 备忘录排版的文章列表，直接复制 note-card 即可新增文章 -->
+  <section id="view-notes" class="view-section">
+    <div class="section__label">Thoughts & Articles</div>
+    <div class="notes-list">
+      
+      <div class="note-card">
+        <div class="note-date">2024.10.24</div>
+        <div class="note-content">
+          <h3>关于自由与平等的随想</h3>
+          <p>真正的自由不仅仅是免于干涉，更是在法律的框架内，每个人都拥有追求梦想的平等机会。在此记录近期关于政治与经济形态演变的思考...</p>
+        </div>
+      </div>
+
+      <div class="note-card">
+        <div class="note-date">2024.09.12</div>
+        <div class="note-content">
+          <h3>VibeCoding: 代码与直觉</h3>
+          <p>当敲击键盘成为一种肌肉记忆，编程就不再仅仅是逻辑的堆砌，而是一种类似音乐创作的“心流”体验。探讨AI时代下程序员的核心壁垒...</p>
+        </div>
+      </div>
+
+      <div class="note-card">
+        <div class="note-date">2024.07.05</div>
+        <div class="note-content">
+          <h3>The Future of Decentralization</h3>
+          <p>为什么我们需要去中心化？在信息茧房与巨头垄断的今天，保护个人隐私和数据主权显得尤为重要。这篇短文记录了我对Web3生态的看法...</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================
+       页面 4: Finance (资金状况仪表盘)
+  ====================================== -->
+  <section id="view-finance" class="view-section">
+    <div class="section__label">Asset Dashboard</div>
+    <div class="finance-dashboard">
+      
+      <!-- 总资产卡片 -->
+      <div class="fin-card fin-total">
+        <span class="fin-label">Estimated Total Net Worth</span>
+        <!-- 这里可以改成你的数字 -->
+        <div class="fin-amount"><span>$</span> 420,050.<span>00</span></div>
+      </div>
+
+      <!-- 资产分布卡片 -->
+      <div class="fin-card">
+        <span class="fin-label" style="margin-bottom: 1.2rem;">Asset Allocation</span>
+        
+        <div style="margin-bottom: 1.5rem;">
+          <div class="fin-row">
+            <span class="fin-name"><span class="dot" style="background: #c084fc;"></span>Crypto (Web3)</span>
+            <span class="fin-value">65%</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width: 65%; background: #c084fc;"></div></div>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <div class="fin-row">
+            <span class="fin-name"><span class="dot" style="background: #64ffda;"></span>U.S. Stocks</span>
+            <span class="fin-value">25%</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width: 25%; background: #64ffda; box-shadow: 0 0 10px #64ffda;"></div></div>
+        </div>
+
+        <div>
+          <div class="fin-row">
+            <span class="fin-name"><span class="dot" style="background: #ffb000;"></span>Cash & Savings</span>
+            <span class="fin-value">10%</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width: 10%; background: #ffb000; box-shadow: 0 0 10px #ffb000;"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
 
 </div>
-
-<!-- Command Palette -->
-<div class="cmd-palette" id="cmdPalette">
-  <div class="cmd-palette__box">
-    <input class="cmd-palette__input" id="cmdInput" placeholder="Type a command..." autocomplete="off">
-    <div class="cmd-palette__list" id="cmdList"></div>
-  </div>
-</div>
-<div class="cmd-hint" id="cmdHint" onclick="togglePalette()">Ctrl + K</div>
 
 <script>
-/* ===== MOUSE SPOTLIGHT ===== */
+/* ===== 鼠标发光追踪 ===== */
 document.addEventListener('mousemove', e => {
   document.documentElement.style.setProperty('--mx', e.clientX + 'px');
   document.documentElement.style.setProperty('--my', e.clientY + 'px');
 });
 
-/* ===== TYPING EFFECT ===== */
-const phrases = ['Dreamer','VibeCoder','Explorer','Thinker'];
+/* ===== 首页打字机特效 ===== */
+const phrases = ['Dreamer', 'VibeCoder', 'Explorer', 'Thinker'];
 const typedEl = document.getElementById('typed');
 let phraseIdx = 0, charIdx = 0, deleting = false;
 
 function typeLoop() {
+  if(!typedEl) return;
   const current = phrases[phraseIdx];
   if (!deleting) {
     typedEl.textContent = current.slice(0, ++charIdx);
@@ -544,411 +518,54 @@ function typeLoop() {
 }
 setTimeout(typeLoop, 800);
 
-/* ===== INTERACTIVE TERMINAL ===== */
-const termBody = document.getElementById('terminalBody');
-const termHidden = document.getElementById('termHiddenInput');
-const terminal = document.getElementById('terminal');
-let termInputBuffer = '';
-let termHistory = [];
-let termHistoryIdx = -1;
-let termActive = false;
-let inputLineEl = null;
+/* ===== 导航栏切换与渐变动画逻辑 ===== */
+const navBtns = document.querySelectorAll('.nav-btn');
+const views = document.querySelectorAll('.view-section');
 
-const birthDate = new Date('2026-01-01');
-function uptimeStr() {
-  const diff = new Date() - birthDate;
-  const d = Math.floor(diff / 864e5);
-  const h = Math.floor((diff % 864e5) / 36e5);
-  const m = Math.floor((diff % 36e5) / 6e4);
-  const s = Math.floor((diff % 6e4) / 1e3);
-  return `${d}d ${h}h ${m}m ${s}s`;
-}
+navBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    // 防止重复点击当前激活的页面
+    if(btn.classList.contains('active')) return;
 
-function appendLine(html) {
-  const div = document.createElement('div');
-  div.className = 'terminal__line';
-  div.innerHTML = html;
-  termBody.insertBefore(div, inputLineEl);
-  termBody.scrollTop = termBody.scrollHeight;
-  return div;
-}
+    // 1. 移除旧按钮的激活状态，赋予新按钮
+    navBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
 
-function appendOutput(text, cls = 'output') {
-  appendLine(`<span class="${cls}">${text}</span>`);
-}
+    const targetId = btn.getAttribute('data-target');
+    const activeView = document.querySelector('.view-section.active');
+    const targetView = document.getElementById(targetId);
 
-/* Auto-play opening lines */
-const openingLines = [
-  { type:'cmd', prompt:'~', cmd:'whoami', delay:600 },
-  { type:'out', text:'JunXChlore', delay:300 },
-  { type:'cmd', prompt:'~', cmd:'cat', flag:'status.txt', delay:800 },
-  { type:'out', text:'currently: <span class="val">Vibecoding something new</span>', delay:200 },
-  { type:'out', text:'mood: <span class="val">SADwww</span>', delay:200 },
-  { type:'out', text:'location: <span class="val">WuHan,CN</span>', delay:200 },
-  { type:'cmd', prompt:'~', cmd:'uptime', delay:600 },
-  { type:'out', text:`<span class="val" id="uptimeVal">${uptimeStr()}</span>`, delay:200 },
-  { type:'out', text:'<span style="color:var(--text-dim);font-style:italic">type <span class="val">help</span> to see what i can do →</span>', delay:400 },
-];
-
-let openIdx = 0;
-function playOpening() {
-  if (openIdx >= openingLines.length) {
-    activateInputLine();
-    return;
-  }
-  const l = openingLines[openIdx];
-  const div = document.createElement('div');
-  div.className = 'terminal__line';
-  if (l.type === 'cmd') {
-    div.innerHTML = `<span class="prompt">${l.prompt} $</span> <span class="cmd">${l.cmd}</span>${l.flag ? ' <span class="flag">' + l.flag + '</span>' : ''}`;
-  } else {
-    div.innerHTML = `<span class="output">${l.text}</span>`;
-  }
-  termBody.appendChild(div);
-  openIdx++;
-  setTimeout(playOpening, l.delay);
-}
-
-function activateInputLine() {
-  termActive = true;
-  inputLineEl = document.createElement('div');
-  inputLineEl.className = 'terminal__line term-input-line';
-  inputLineEl.innerHTML = `<span class="prompt">~ $</span><span class="typed" id="termTyped"></span><span class="caret"></span>`;
-  termBody.appendChild(inputLineEl);
-}
-
-setTimeout(playOpening, 1200);
-
-/* Update uptime live */
-setInterval(() => {
-  const el = document.getElementById('uptimeVal');
-  if (el) el.textContent = uptimeStr();
-}, 1000);
-
-/* Focus hidden input when terminal clicked */
-terminal.addEventListener('click', () => {
-  if (termActive) termHidden.focus();
-});
-
-/* ===== TERMINAL COMMANDS ===== */
-const themes = {
-  phosphor: { label:'Phosphor (cyan)' },
-  neon:     { label:'Neon (magenta)' },
-  amber:    { label:'Amber (CRT)' },
-  plasma:   { label:'Plasma (violet)' },
-};
-
-function setTheme(name) {
-  if (!themes[name]) return false;
-  document.documentElement.setAttribute('data-theme', name);
-  return true;
-}
-
-const termCommands = {
-  help: () => [
-    'available commands:',
-    '  <span class="val">about</span>      — about this site',
-    '  <span class="val">whoami</span>     — who am i',
-    '  <span class="val">ls</span>         — list links',
-    '  <span class="val">cat</span> [file] — read a file',
-    '  <span class="val">date</span>       — current date',
-    '  <span class="val">uptime</span>     — site uptime',
-    '  <span class="val">echo</span> [msg] — echo something',
-    '  <span class="val">neofetch</span>   — system info',
-    '  <span class="val">theme</span> [n]  — switch theme (phosphor/neon/amber/plasma)',
-    '  <span class="val">matrix</span>     — wake up, neo',
-    '  <span class="val">sudo</span>       — try at your own risk',
-    '  <span class="val">clear</span>      — clear terminal',
-    '  <span class="val">exit</span>       — leave (or not)',
-  ].join('\n'),
-
-  about: () => `JunXChlore's personal corner of the internet.\nBuilt with vanilla HTML, CSS, JS — no frameworks, no trackers.\npress <span class="val">Ctrl+K</span> for the command palette.\ntry the konami code: ↑↑↓↓←→←→BA`,
-
-  whoami: () => 'JunXChlore',
-
-  ls: () => 'github.lnk    twitter.lnk    telegram.lnk    bilibili.lnk',
-
-  cat: (arg) => {
-    if (!arg) return '<span class="err">cat: missing file operand</span>';
-    if (arg === 'status.txt') return 'currently: <span class="val">Vibecoding something new</span>\nmood: <span class="val">SADwww</span>\nlocation: <span class="val">WuHan,CN</span>';
-    if (arg === 'about.md' || arg === 'about') return termCommands.about();
-    return `<span class="err">cat: ${arg}: No such file or directory</span>`;
-  },
-
-  pwd: () => '/home/junx',
-
-  date: () => new Date().toString(),
-
-  uptime: () => `<span class="val">${uptimeStr()}</span>`,
-
-  echo: (...args) => args.length ? args.join(' ') : '',
-
-  neofetch: () => `<span class="val">       _____      </span>  junx<span class="val">@</span>cloud
-<span class="val">      /     \\     </span>  ----------
-<span class="val">     | () () |    </span>  OS:       WebOS x86_64
-<span class="val">      \\  ^  /     </span>  Host:     Browser Edition
-<span class="val">       |||||      </span>  Kernel:   v8 / spidermonkey
-<span class="val">       |||||      </span>  Uptime:   ${uptimeStr()}
-                  Shell:    vibecode 1.0
-                  Theme:    ${document.documentElement.getAttribute('data-theme')}
-                  CPU:      caffeine
-                  Memory:   42% / ∞`,
-
-  theme: (arg) => {
-    if (!arg) return `usage: theme [phosphor|neon|amber|plasma]\ncurrent: <span class="val">${document.documentElement.getAttribute('data-theme')}</span>`;
-    if (setTheme(arg)) return `theme switched to: <span class="val">${arg}</span>`;
-    return `<span class="err">unknown theme: ${arg}. try: phosphor, neon, amber, plasma</span>`;
-  },
-
-  matrix: () => { startMatrix(8000); return 'wake up, neo... <span class="val">the matrix has you.</span>'; },
-
-  sudo: (...args) => {
-    if (args.length === 0) return '<span class="err">sudo: usage: sudo command</span>';
-    return `<span class="err">[sudo] password for junx: </span>\n<span class="err">Sorry, user junx is not in the sudoers file. nice try 😏</span>`;
-  },
-
-  exit: () => 'where would you go? this is the whole internet.',
-
-  clear: () => { 
-    termBody.querySelectorAll('.terminal__line:not(.term-input-line)').forEach(n => n.remove());
-    return null;
-  },
-
-  hello: () => '👋 hi there.',
-  hi: () => '👋 hello.',
-};
-
-function runCommand(input) {
-  const trimmed = input.trim();
-  if (!trimmed) return;
-  const [cmd, ...args] = trimmed.split(/\s+/);
-  const fn = termCommands[cmd.toLowerCase()];
-  // echo back the typed line as a finalized history entry
-  const echoDiv = document.createElement('div');
-  echoDiv.className = 'terminal__line';
-  echoDiv.innerHTML = `<span class="prompt">~ $</span> <span class="cmd">${escapeHtml(trimmed)}</span>`;
-  termBody.insertBefore(echoDiv, inputLineEl);
-  
-  if (!fn) {
-    appendOutput(`command not found: ${escapeHtml(cmd)}. try '<span class="val">help</span>'`, 'output');
-  } else {
-    const result = fn(...args);
-    if (result !== null && result !== undefined && result !== '') {
-      appendOutput(result, 'output');
+    // 2. 动画执行：先将当前页面变透明
+    if (activeView) {
+      activeView.classList.remove('fade-in');
+      
+      // 等待变透明动画完成 (0.4秒) 后切换 display，并让新页面淡入
+      setTimeout(() => {
+        activeView.classList.remove('active');
+        targetView.classList.add('active');
+        
+        // 强制重绘以确保 css transition 能够触发
+        void targetView.offsetWidth; 
+        
+        targetView.classList.add('fade-in');
+      }, 300); // 300ms 比 CSS 的 400ms 稍微提早一点切走，手感更流畅
     }
-  }
-  termBody.scrollTop = termBody.scrollHeight;
-}
-
-function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-
-/* Hidden input listener */
-termHidden.addEventListener('input', () => {
-  termInputBuffer = termHidden.value;
-  const typedEl = document.getElementById('termTyped');
-  if (typedEl) typedEl.textContent = termInputBuffer;
-});
-
-termHidden.addEventListener('keydown', e => {
-  if (!termActive) return;
-  if (e.key === 'Enter') {
-    e.preventDefault();
-    if (termInputBuffer.trim()) {
-      termHistory.push(termInputBuffer);
-      termHistoryIdx = termHistory.length;
-      runCommand(termInputBuffer);
-    }
-    termInputBuffer = '';
-    termHidden.value = '';
-    const typedEl = document.getElementById('termTyped');
-    if (typedEl) typedEl.textContent = '';
-  } else if (e.key === 'ArrowUp') {
-    e.preventDefault();
-    if (termHistory.length && termHistoryIdx > 0) {
-      termHistoryIdx--;
-      termHidden.value = termHistory[termHistoryIdx];
-      termInputBuffer = termHidden.value;
-      const typedEl = document.getElementById('termTyped');
-      if (typedEl) typedEl.textContent = termInputBuffer;
-    }
-  } else if (e.key === 'ArrowDown') {
-    e.preventDefault();
-    if (termHistoryIdx < termHistory.length - 1) {
-      termHistoryIdx++;
-      termHidden.value = termHistory[termHistoryIdx];
-    } else {
-      termHistoryIdx = termHistory.length;
-      termHidden.value = '';
-    }
-    termInputBuffer = termHidden.value;
-    const typedEl = document.getElementById('termTyped');
-    if (typedEl) typedEl.textContent = termInputBuffer;
-  }
-});
-
-/* ===== CLOCK ===== */
-const clockEl = document.getElementById('clock');
-function updateClock() {
-  const n = new Date();
-  clockEl.textContent = [n.getHours(), n.getMinutes(), n.getSeconds()].map(v => String(v).padStart(2,'0')).join(':');
-}
-updateClock(); setInterval(updateClock, 1000);
-
-/* ===== SCROLL REVEAL ===== */
-const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-}, { threshold: 0.15 });
-reveals.forEach(el => observer.observe(el));
-
-/* ===== 3D TILT ON LINK CARDS ===== */
-document.querySelectorAll('.link-item').forEach(item => {
-  item.addEventListener('mousemove', e => {
-    const rect = item.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width;
-    const y = (e.clientY - rect.top) / rect.height;
-    const rx = (0.5 - y) * 8;
-    const ry = (x - 0.5) * 10;
-    item.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
-  });
-  item.addEventListener('mouseleave', () => {
-    item.style.transform = '';
   });
 });
 
-/* ===== MATRIX RAIN ===== */
-let matrixInterval = null;
-function startMatrix(duration = 8000) {
-  const canvas = document.getElementById('matrixCanvas');
-  if (matrixInterval) return;
-  canvas.classList.remove('fading');
-  canvas.classList.add('active');
-  const ctx = canvas.getContext('2d');
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = innerWidth * dpr;
-  canvas.height = innerHeight * dpr;
-  canvas.style.width = innerWidth + 'px';
-  canvas.style.height = innerHeight + 'px';
-  ctx.scale(dpr, dpr);
-  
-  const chars = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎABCDEFGHIJKLMNOPQR0123456789'.split('');
-  const fontSize = 14;
-  const cols = Math.floor(innerWidth / fontSize);
-  const drops = Array(cols).fill(0).map(() => Math.random() * -50);
-  
-  matrixInterval = setInterval(() => {
-    ctx.fillStyle = 'rgba(11,11,14,0.06)';
-    ctx.fillRect(0, 0, innerWidth, innerHeight);
-    const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-    ctx.fillStyle = accent;
-    ctx.font = fontSize + 'px JetBrains Mono, monospace';
-    drops.forEach((d, i) => {
-      const ch = chars[Math.floor(Math.random() * chars.length)];
-      ctx.fillText(ch, i * fontSize, d * fontSize);
-      if (d * fontSize > innerHeight && Math.random() > 0.975) drops[i] = 0;
-      drops[i]++;
-    });
-  }, 45);
-  
-  setTimeout(() => {
-    clearInterval(matrixInterval);
-    matrixInterval = null;
-    canvas.classList.add('fading');
-    setTimeout(() => {
-      canvas.classList.remove('active', 'fading');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }, 1000);
-  }, duration);
-}
-
-/* ===== KONAMI CODE ===== */
-const konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
-let kIdx = 0;
-document.addEventListener('keydown', e => {
-  // ignore when typing in terminal or palette
-  if (document.activeElement === termHidden || document.activeElement === document.getElementById('cmdInput')) return;
-  const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
-  if (key === konami[kIdx].toLowerCase ? konami[kIdx].toLowerCase() : konami[kIdx]) {
-    if (key === konami[kIdx] || key === konami[kIdx].toLowerCase()) {
-      kIdx++;
-      if (kIdx === konami.length) {
-        startMatrix(8000);
-        kIdx = 0;
-      }
-      return;
-    }
-  }
-  kIdx = 0;
-});
-
-/* ===== TAB INVISIBLE TITLE ===== */
+/* ===== 标签页切出时标题恶搞 (保留了原版的彩蛋) ===== */
 const originalTitle = document.title;
 document.addEventListener('visibilitychange', () => {
-  document.title = document.hidden ? 'SuckmyCockNigga~' : originalTitle;
+  document.title = document.hidden ? 'Wait, come back! 🥺' : originalTitle;
 });
-
-/* ===== COMMAND PALETTE ===== */
-const palette = document.getElementById('cmdPalette');
-const cmdInput = document.getElementById('cmdInput');
-const cmdListEl = document.getElementById('cmdList');
-
-const commands = [
-  { label: 'Go to GitHub',          action: () => window.open('https://github.com/JunXChlore','_blank'), keys: 'G' },
-  { label: 'Go to Twitter / X',     action: () => window.open('https://x.com/JunX_Chlore','_blank'), keys: 'T' },
-  { label: 'Go to Telegram',        action: () => window.open('https://t.me/chlore0510','_blank'), keys: 'M' },
-  { label: 'Go to Bilibili',        action: () => window.open('https://space.bilibili.com/3546639933376873','_blank'), keys: 'B' },
-  { label: 'Theme: Phosphor (cyan)',action: () => { setTheme('phosphor'); closePalette(); }, keys: '1' },
-  { label: 'Theme: Neon (magenta)', action: () => { setTheme('neon'); closePalette(); }, keys: '2' },
-  { label: 'Theme: Amber (CRT)',    action: () => { setTheme('amber'); closePalette(); }, keys: '3' },
-  { label: 'Theme: Plasma (violet)',action: () => { setTheme('plasma'); closePalette(); }, keys: '4' },
-  { label: 'Activate Matrix Rain',  action: () => { closePalette(); setTimeout(() => startMatrix(8000), 300); }, keys: '⏎' },
-  { label: 'Focus Terminal',        action: () => { closePalette(); setTimeout(() => { termHidden.focus(); termBody.scrollTop = termBody.scrollHeight; }, 200); }, keys: '/' },
-  { label: 'Scroll to top',         action: () => { window.scrollTo({ top: 0, behavior: 'smooth' }); closePalette(); }, keys: 'Home' },
-];
-
-let selectedIdx = 0;
-
-function renderCommands(filter = '') {
-  const filtered = commands.filter(c => c.label.toLowerCase().includes(filter.toLowerCase()));
-  cmdListEl.innerHTML = '';
-  selectedIdx = 0;
-  filtered.forEach((c, i) => {
-    const div = document.createElement('div');
-    div.className = 'cmd-palette__item' + (i === 0 ? ' selected' : '');
-    div.innerHTML = c.label + '<span class="key">' + c.keys + '</span>';
-    div.onclick = () => { c.action(); closePalette(); };
-    cmdListEl.appendChild(div);
-  });
-}
-
-function togglePalette() {
-  if (palette.classList.contains('active')) { closePalette(); return; }
-  palette.classList.add('active');
-  cmdInput.value = '';
-  renderCommands();
-  setTimeout(() => cmdInput.focus(), 50);
-}
-function closePalette() { palette.classList.remove('active'); }
-
-document.addEventListener('keydown', e => {
-  if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); togglePalette(); return; }
-  if (e.key === 'Escape') closePalette();
-  if (!palette.classList.contains('active')) return;
-  const items = cmdListEl.querySelectorAll('.cmd-palette__item');
-  if (e.key === 'ArrowDown') { e.preventDefault(); selectedIdx = Math.min(selectedIdx + 1, items.length - 1); }
-  if (e.key === 'ArrowUp')   { e.preventDefault(); selectedIdx = Math.max(selectedIdx - 1, 0); }
-  if (e.key === 'Enter' && items[selectedIdx]) { items[selectedIdx].click(); return; }
-  items.forEach((el, i) => el.classList.toggle('selected', i === selectedIdx));
-});
-
-cmdInput.addEventListener('input', () => renderCommands(cmdInput.value));
-palette.addEventListener('click', e => { if (e.target === palette) closePalette(); });
-
-/* ===== CONSOLE EASTER EGG ===== */
-console.log('%c👋 hey, curious one.', 'color:#64ffda;font-size:14px;font-weight:bold;font-family:monospace');
-console.log('%cthe site has a few secrets:\n  • Ctrl+K — command palette\n  • ↑↑↓↓←→←→BA — you know what\n  • click the terminal and type "help"', 'color:#8888a0;font-family:monospace;line-height:1.6');
 </script>
 </body>
 </html>
+//💡 如何自定义内容：
+替换图片（Gallery）：找到 <section id="view-gallery">，你可以看到我已经写好了三个展示块。你只需要复制其中一个
+<div class="gallery-item"> ... </div>，然后修改里面的 <img> 链接和你想要的配文 <p> 即可无限堆叠，它会自动按网格进行高级排版。
+新增文章（Notes）：找到 <section id="view-notes">，复制 <div class="note-card">...</div> 代码块，
+修改左侧日期<div class="note-date"> 以及右侧的内容即可。鼠标滑过时会有优雅的高亮交互。
+资金数值（Finance）：找到 <div class="fin-amount">，你可以直接修改里面的美元数值。
+下方各种资产分布的百分比只需要修改 HTML 里的文本（如 65%）以及它下面对应<div class="progress-fill" style="width: 65%;">
+的 width 属性即可让进度条跟随变动。//
